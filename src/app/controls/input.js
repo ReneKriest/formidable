@@ -6,7 +6,14 @@ rk = window.rk || {};
 ;(function () {
     'use strict';
     // Controls
+
     function InputControl (settings) {
+        // Static value/Memoization Pattern
+        // Prevents double usage of IDs
+        // Alternative: Closure
+        if (!InputControl.id)
+            InputControl.id = 0;
+
         // Defaults:
         var defaultSettings = {
             id: 'rk_input',
@@ -17,13 +24,16 @@ rk = window.rk || {};
             templateHtml = $('#template_control_input').html(),
             template = Handlebars.compile(templateHtml);
 
-
         // Merge the default settings with injected settings
-        defaultSettings = $.extend(defaultSettings, settings);
-        this.settings = defaultSettings;
-        this.id = defaultSettings.id;
+        settings = $.extend(defaultSettings, settings);
+        settings.id = settings.id + InputControl.id;
+        settings.name = settings.name + InputControl.id;
+        InputControl.id++;
+
+        this.settings = settings;
+        this.id = settings.id;
         // input control = template + default settings
-        this.element = template(defaultSettings);
+        this.element = template(settings);
     }
 
     var InputControlMethods = {
@@ -35,9 +45,6 @@ rk = window.rk || {};
         },
         getValue: function () {
             return this.element.val();
-        },
-        appendElement: function (formElement) {
-            formElement.append(this.getElement());
         },
         save: function () {
             return {

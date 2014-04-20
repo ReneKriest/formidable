@@ -9,7 +9,7 @@ rk = window.rk || {};
     'use strict';
 
     function Form(wrapper, id) {
-        this.formComponents = [];
+        this.components = [];
         // Handlebars
         this.formElement = $('<form id="' + id + '">');
         // Settings
@@ -23,15 +23,20 @@ rk = window.rk || {};
             // Factory would lead to better results
             // control instanceof rk.Controls.Input
             if (!(control instanceof Object))
-                throw new Error('Wrong Instance')
+                throw new Error('Wrong Instance');
 
-            this.formComponents.push(control);
-            control.appendElement(this.element);
+            this.components.push(control);
+            this.element.append(control.getElement());
         },
         save: function () {
             var jsonNameValue = [];
-            this.formComponents.forEach(function (component) {
-                jsonNameValue.push(component.save());
+            this.components.forEach(function (component) {
+                // no arrays in arrays:
+                var values = component.save();
+                if (Array.isArray(values))
+                    jsonNameValue = jsonNameValue.concat(values);
+                else
+                    jsonNameValue.push();
             });
             return jsonNameValue;
         },

@@ -1,47 +1,46 @@
 // Fieldset
-
 rk = window.rk || {};
-
-// method
-// action
 
 ;(function (rk) {
     'use strict';
 
-    function Form(wrapper, id) {
-        this.formComponents = [];
-        // Handlebars
-        this.formElement = $('<form id="' + id + '">');
-        // Settings
-        $(wrapper).append(this.formElement);
+    function FieldSet(wrapper, id) {
+        this.components = [];
+        var templateHtml = $('#template_control_fieldset').html(),
+            template = Handlebars.compile(templateHtml);
 
-        this.element = $('#' + id);
+        // Settings
+        var settings = {
+            legend: 'Feldsetzung'
+        };
+
+        this.$element = $(template(settings));
         this.id = id;
     }
-    var FormMethods = {
+    var FieldSetMethods = {
         add: function (control) {
             // Factory would lead to better results
             // control instanceof rk.Controls.Input
             if (!(control instanceof Object))
-                throw new Error('Wrong Instance')
+                throw new Error('Wrong Instance');
 
-            this.formComponents.push(control);
-            control.appendElement(this.element);
+            this.components.push(control);
+            this.$element.append(control.getElement());
         },
         save: function () {
             var jsonNameValue = [];
-            this.formComponents.forEach(function (component) {
+            this.components.forEach(function (component) {
                 jsonNameValue.push(component.save());
             });
             return jsonNameValue;
         },
         getElement: function () {
-            return this.element;
+            return this.$element;
         }
     };
-    Form.prototype = Object.create(FormMethods);
+    FieldSet.prototype = Object.create(FieldSetMethods);
 
-    rk.Form = Form;
+    rk.FieldSet = FieldSet;
 })(rk);
 
 

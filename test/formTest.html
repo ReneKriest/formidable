@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="../vendor/qunit/qunit-1.14.0.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+
+    <section id="wrapper"></section>
+    <!-- Templates -->
+    <script id="template_form" type="text/x-handlebars-template">
+        <form name="{{this.name}}" action="{{this.action}}" method="{{this.method}}"></form>
+    </script>
+    <script id="template_control_fieldset" type="text/x-handlebars-template">
+        <fieldset><legend>{{this.legend}}</legend></fieldset>
+    </script>
+    <script id="template_control_input" type="text/x-handlebars-template">
+        <label for="{{this.id}}">{{this.label}}</label><input id="{{this.id}}" type="text" placeholder="{{this.placeholder}}" name="">
+    </script>
+
+    <script id="template_control_select" type="text/x-handlebars-template">
+        <select size="1" name="">
+            <option value="{{this.value}}"></option>
+        </select>
+        <label for="{{this.id}}">{{this.label}}</label><input id="{{this.id}}" type="text" placeholder="{{this.placeholder}}">
+    </script>
+    <!-- Templates END -->
+
+    <!-- Vendor Libraries -->
+    <script src="../vendor/jquery-2.1.0.js"></script>
+    <script src="../vendor/handlebars-v1.3.0.js"></script>
+    <!-- App -->
+    <script src="../src/app/form.js"></script>
+    <script src="../src/app/fieldset.js"></script>
+    <script src="../src/app/controls/input.js"></script>
+
+    <script src="../vendor/qunit/qunit-1.14.0.js"></script>
+<script src="../test/formTest.js"></script>
+</body>
+</html>
