@@ -20,17 +20,20 @@ rk = window.rk || {};
     }
     var FormMethods = {
         add: function (control) {
+            // Factory would lead to better results
+            // control instanceof rk.Controls.Input
+            if (!(control instanceof Object))
+                throw new Error('Wrong Instance')
+
             this.formComponents.push(control);
-            // this.appendControl()
-            this.element.append(control.getElement());
+            control.appendElement(this.element);
         },
-//        getElement: function (elem) {
-//            return this.formComponents[elem];
-//        },
         save: function () {
-            this.formComponents.forEach(function (control) {
-                control.save();
+            var jsonNameValue = [];
+            this.formComponents.forEach(function (component) {
+                jsonNameValue.push(component.save());
             });
+            return jsonNameValue;
         },
         getElement: function () {
             return this.element;

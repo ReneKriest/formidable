@@ -20,4 +20,5 @@ $(document).ready(function () {
     var comp = new rk.Form('#wrapper', 'test');
     var input = new rk.Controls.Input();
     comp.add(input);
+    rk.check = comp;
 });
