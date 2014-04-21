@@ -64,6 +64,8 @@ rk = window.rk || {};
                 Handlebars.registerHelper('birthDay', function() {
                     var str = '';
                     for (day=1; day<=31; day++) {
+                        // TODO: Ggf selbst Handlebarisieren sprich: in View setzen
+                        // Array mit Numbers --> #each --- //each
                         str += '<option value="' + day +'">' + day + '</option>';
                     }
                     return str;
@@ -76,6 +78,7 @@ rk = window.rk || {};
                 Handlebars.registerHelper('birthMonth', function() {
                     var str = '';
                     for (month=1; month<=12; month++) {
+                        // TODO: Ggf selbst Handlebarisieren sprich: in View setzen
                         str += '<option value="' + month +'">' + month + '</option>';
                     }
                     return str;
@@ -88,6 +91,7 @@ rk = window.rk || {};
                 Handlebars.registerHelper('birthYear', function() {
                     var str = '';
                     for (year=2013; year>=1950; year--) {
+                        // TODO: Ggf selbst Handlebarisieren sprich: in View setzen
                         str += '<option value="' + year +'">' + year + '</option>';
                     }
                     return str;
