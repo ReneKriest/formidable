@@ -53,4 +53,22 @@ $(document).ready(function () {
         birthYear: false
     }));
     rk.check = form;
+
+    var jsonData =
+    //http://localhost:1337/backend/
+
+    $('#rk_send').on('click', function () {
+        debugger;
+        $.ajax({
+            type: "POST",
+            url: "../../index.php",
+            data: form.save()
+        })
+            .done(function (msg) {
+                alert("Data Saved: " + msg);
+            })
+            .fail(function (result) {
+                alert(result);
+            });
+    });
 });
