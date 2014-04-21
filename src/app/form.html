@@ -22,33 +22,43 @@
     <label for="{{this.id}}">{{this.label}}</label><input id="{{this.id}}" type="text" placeholder="{{this.placeholder}}" name="">
 </script>
 
+<!-- Select: standard case -->
 <script id="template_control_select" type="text/x-handlebars-template">
-    <select size="1" name="{{this.name}}">
-        {{#each this.keyValues}}
+    <select size="1" name="{{this.name}}" id="{{this.id}}">
+        {{#each this.values}}
             {{#each this}}
-                <option value="{{@key}}">{{this}}</option>
+                <option value="{{@key}}">{{this}}</option><!-- {key: value} -->
             {{/each}}
         {{/each}}
     </select>
 </script>
+<!-- Select: standard case END -->
 
+<!-- Select: birthday case -->
 <script id="template_control_select_birthday" type="text/x-handlebars-template">
-    <select size="1" name="">
+    <select size="1" name="{{this.name}}" id="{{this.id}}">
         {{{birthDay}}}
     </select>
 </script>
 
 <script id="template_control_select_birthmonth" type="text/x-handlebars-template">
-    <select size="1" name="">
+    <select size="1" name="{{this.name}}" id="{{this.id}}">
         {{{birthMonth}}}
     </select>
 </script>
 
 <script id="template_control_select_birthyear" type="text/x-handlebars-template">
-    <select size="1" name="">
+    <select size="1" name="{{this.name}}" id="{{this.id}}">
         {{{birthYear}}}
     </select>
 </script>
+
+<script id="template_control_select_birthday_options" type="text/x-handlebars-template">
+    {{#each this}}
+        <option value="{{this}}">{{this}}</option>
+    {{/each}}
+</script>
+<!-- Select: birthday case END -->
 
 <!-- Templates END -->
 <!-- Vendor Libraries -->

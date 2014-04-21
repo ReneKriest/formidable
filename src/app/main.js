@@ -23,23 +23,23 @@ $(document).ready(function () {
     var input1 = new rk.Controls.Input();
     var input2 = new rk.Controls.Input();
 
-    // Spread-Operator bzw. übeladen auf Array [input1, input2]
+    // Spread-Operator bzw. überladen auf Array [input1, input2]
     fieldSet.add(input1);
     fieldSet.add(input2);
 
     form.add(fieldSet);
 
-    var select = new rk.Controls.Select();
-    form.add(select);
     form.add(new rk.Controls.Select({
-        birthDay: false,
-        birthMonth: true,
-        birthYear: false
+        birthDay: true,
+        values: null
     }));
     form.add(new rk.Controls.Select({
-        birthDay: false,
-        birthMonth: false,
-        birthYear: true
+        birthMonth: true,
+        values: null
+    }));
+    form.add(new rk.Controls.Select({
+        birthYear: true,
+        values: null
     }));
 
     form.add(new rk.Controls.Select({

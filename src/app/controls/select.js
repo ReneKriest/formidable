@@ -7,29 +7,37 @@ rk = window.rk || {};
     'use strict';
     // Controls
     function SelectControl (settings) {
+        // Single var pattern:
+        var templateHtml,
+            template,
+            templateValues;
+
         // Static value/Memoization Pattern
         // Prevents double usage of IDs
         if (!SelectControl.id)
             SelectControl.id = 0;
 
-        // Defaults:
+        // Define constant values:
+        var CONFIG = {
+            TEMPLATE: {
+                SELECT: '#template_control_select',
+                BIRTHDAY: '#template_control_select_birthday',
+                BIRTHMONTH: '#template_control_select_birthmonth',
+                BIRTHYEAR: '#template_control_select_birthyear'
+            }
+        }
+        // Define defaults settings:
         var defaultSettings = {
-                id: 'rk_select',
-                placeholder: 'Text',
-                label: 'Label für den Text:',
+            id: 'rk_select',
+            placeholder: 'Text',
+            label: 'Label für den Text:',
+            name: 'rk_select',
+            values: null,
 
-//                values: [
-//                    {'city_1': 'Frankfurt'},
-//                    {'city_2': 'Wiesbaden'}
-//                ],
-                values: null,
-
-                birthDay: true,
-                birthMonth: false,
-                birthYear: false
-            },
-        // TODO: _templateHtml --> private
-        // TODO: _templateHtml --> private END
+            birthDay: false,
+            birthMonth: false,
+            birthYear: false
+        };
 
         // Merge the default settings with injected settings
         settings = $.extend(defaultSettings, settings);
@@ -37,70 +45,86 @@ rk = window.rk || {};
         settings.name = settings.name + SelectControl.id;
         SelectControl.id++;
 
+        // Expose the settings object
         this.settings = settings;
         this.id = settings.id;
 
-        var templateHtml,
-            template;
-        var day,
-            month,
-            year;
+        handlebarHelperRegistration();
 
+        // Normal Values
         if (settings.values) {
-            templateHtml = $('#template_control_select').html();
+            templateHtml = $(CONFIG.TEMPLATE.SELECT).html();
             template = Handlebars.compile(templateHtml);
-
-            var values = {
-                name: settings.name,
-                keyValues: settings.values
-            };
-            this.element = template(values);
         } else {
-            // TODO: function --> registerHelper for day || month || year
+            // Birthday
             if (settings.birthDay) {
-                templateHtml = $('#template_control_select_birthday').html();
+                templateHtml = $(CONFIG.TEMPLATE.BIRTHDAY).html();
                 template = Handlebars.compile(templateHtml);
-
-                Handlebars.registerHelper('birthDay', function() {
-                    var str = '';
-                    for (day=1; day<=31; day++) {
-                        // TODO: Ggf selbst Handlebarisieren sprich: in View setzen
-                        // Array mit Numbers --> #each --- //each
-                        str += '<option value="' + day +'">' + day + '</option>';
-                    }
-                    return str;
-                });
             }
             if (settings.birthMonth) {
-                templateHtml = $('#template_control_select_birthmonth').html();
+                templateHtml = $(CONFIG.TEMPLATE.BIRTHMONTH).html();
                 template = Handlebars.compile(templateHtml);
-
-                Handlebars.registerHelper('birthMonth', function() {
-                    var str = '';
-                    for (month=1; month<=12; month++) {
-                        // TODO: Ggf selbst Handlebarisieren sprich: in View setzen
-                        str += '<option value="' + month +'">' + month + '</option>';
-                    }
-                    return str;
-                });
             }
             if (settings.birthYear) {
-                templateHtml = $('#template_control_select_birthyear').html();
+                templateHtml = $(CONFIG.TEMPLATE.BIRTHYEAR).html();
                 template = Handlebars.compile(templateHtml);
-
-                Handlebars.registerHelper('birthYear', function() {
-                    var str = '';
-                    for (year=2013; year>=1950; year--) {
-                        // TODO: Ggf selbst Handlebarisieren sprich: in View setzen
-                        str += '<option value="' + year +'">' + year + '</option>';
-                    }
-                    return str;
-                });
             }
-            this.element = template(settings);
         }
+        this.element = template(settings);
     }
 
+    // Handlebar Helper registration and configuration
+    function handlebarHelperRegistration() {
+        // Again: Static variable and an early return to prevent multiple registrations
+        if (SelectControl.helperRegistered)
+            return;
+
+        SelectControl.helperRegistered = true;
+
+        var handlebarHelper = {
+            createDays: function () {
+                var days = [],
+                    day,
+                    k;
+                for (day = 1, k = 0; day <= 31; day++, k++) {
+                    days[k] = day;
+                }
+                var templateHtml = $('#template_control_select_birthday_options').html(),
+                    template = Handlebars.compile(templateHtml);
+
+                return template(days);
+            },
+            createMonths: function () {
+                var months = [],
+                    month;
+                for (month = 1; month <= 12; month++) {
+                    months[month - 1] = month;
+                }
+                var templateHtml = $('#template_control_select_birthday_options').html(),
+                    template = Handlebars.compile(templateHtml);
+
+                return template(months);
+            },
+            createYears: function () {
+                var years = [],
+                    year,
+                    k;
+                for (year = 2013, k = 0; year >= 1950; year--, k++) {
+                    years[k] = year;
+                }
+                var templateHtml = $('#template_control_select_birthday_options').html(),
+                    template = Handlebars.compile(templateHtml);
+
+                return template(years);
+            }
+        };
+
+        Handlebars.registerHelper('birthDay', handlebarHelper.createDays);
+        Handlebars.registerHelper('birthMonth', handlebarHelper.createMonths);
+        Handlebars.registerHelper('birthYear', handlebarHelper.createYears);
+    }
+
+    // Prototype methods
     var SelectControlMethods = {
         getElement: function () {
             return this.element;
@@ -110,6 +134,10 @@ rk = window.rk || {};
         },
         getValue: function () {
             return this.element.val();
+        },
+        save: function () {
+            debugger;
+            return 'TODO';
         }
     };
     SelectControl.prototype = Object.create(SelectControlMethods);
