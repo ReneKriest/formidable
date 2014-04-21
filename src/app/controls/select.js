@@ -72,7 +72,7 @@ rk = window.rk || {};
                 template = Handlebars.compile(templateHtml);
             }
         }
-        this.element = template(settings);
+        this.$element = $(template(settings));
     }
 
     // Handlebar Helper registration and configuration
@@ -129,7 +129,7 @@ rk = window.rk || {};
     // Prototype methods
     var SelectControlMethods = {
         getElement: function () {
-            return this.element;
+            return this.$element;
         },
         getNode: function () {
             return $('#' + this.id);

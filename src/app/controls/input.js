@@ -34,12 +34,12 @@ rk = window.rk || {};
         this.id = settings.id;
         // input control = template + default settings
         // TODO: $elemet = $(template(settings)) ?
-        this.element = template(settings);
+        this.$element = $(template(settings));
     }
 
     var InputControlMethods = {
         getElement: function () {
-            return this.element;
+            return this.$element;
         },
         getNode: function () {
             return $('#' + this.id);
