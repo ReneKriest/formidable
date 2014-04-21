@@ -13,7 +13,7 @@
 
 <!-- Templates -->
 <script id="template_form" type="text/x-handlebars-template">
-    <form name="{{this.name}}" action="{{this.action}}" method="{{this.method}}"></form>
+    <form id="{{this.id}}" name="{{this.name}}" action="{{this.action}}" method="{{this.method}}"></form>
 </script>
 <script id="template_control_fieldset" type="text/x-handlebars-template">
     <fieldset><legend>{{this.legend}}</legend></fieldset>
@@ -27,7 +27,7 @@
     <select size="1" name="{{this.name}}" id="{{this.id}}">
         {{#each this.values}}
             {{#each this}}
-                <option value="{{@key}}">{{this}}</option><!-- {key: value} -->
+                <option value="{{@key}}">{{this}}</option>
             {{/each}}
         {{/each}}
     </select>

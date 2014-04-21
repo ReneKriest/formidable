@@ -49,7 +49,7 @@ rk = window.rk || {};
         save: function () {
             return {
                 'name': this.settings.name,
-                'value': this.getNode().val()
+                'value': this.getNode().val()   // TODO: Escapen
             }
         }
     };

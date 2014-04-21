@@ -10,14 +10,26 @@ rk = window.rk || {};
 
     function Form(wrapper, id) {
         this.components = [];
+
+        var settings = {
+            id: id,
+            name: 'test',
+            action: '',
+            method: ''
+        };
         // Handlebars
-        this.formElement = $('<form id="' + id + '">');
+        var templateHtml = $('#template_form').html(),
+            template = Handlebars.compile(templateHtml);
+
+        this.formElement = template(settings);
         // Settings
         $(wrapper).append(this.formElement);
 
         this.element = $('#' + id);
         this.id = id;
     }
+
+    // Prototype methods
     var FormMethods = {
         add: function (control) {
             // Factory would lead to better results
@@ -36,14 +48,15 @@ rk = window.rk || {};
                 if (Array.isArray(values))
                     jsonNameValue = jsonNameValue.concat(values);
                 else
-                    jsonNameValue.push();
+                    jsonNameValue.push(values);
             });
-            return jsonNameValue;
+            return JSON.stringify(jsonNameValue);
         },
         getElement: function () {
             return this.element;
         }
     };
+
     Form.prototype = Object.create(FormMethods);
 
     rk.Form = Form;

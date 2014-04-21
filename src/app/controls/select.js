@@ -4,6 +4,7 @@
 rk = window.rk || {};
 
 ;(function () {
+    // Strict mode --> fail earlier
     'use strict';
     // Controls
     function SelectControl (settings) {
@@ -18,6 +19,7 @@ rk = window.rk || {};
             SelectControl.id = 0;
 
         // Define constant values:
+        // No single var pattern here due to Visual Studio suckage ;)
         var CONFIG = {
             TEMPLATE: {
                 SELECT: '#template_control_select',
@@ -25,7 +27,7 @@ rk = window.rk || {};
                 BIRTHMONTH: '#template_control_select_birthmonth',
                 BIRTHYEAR: '#template_control_select_birthyear'
             }
-        }
+        };
         // Define defaults settings:
         var defaultSettings = {
             id: 'rk_select',
@@ -136,8 +138,10 @@ rk = window.rk || {};
             return this.element.val();
         },
         save: function () {
-            debugger;
-            return 'TODO';
+            return {
+                'name': this.settings.name,
+                'value': this.getNode().val()       // TODO: Escapen
+            }
         }
     };
     SelectControl.prototype = Object.create(SelectControlMethods);
