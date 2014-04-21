@@ -54,15 +54,12 @@ $(document).ready(function () {
     }));
     rk.check = form;
 
-    var jsonData =
-    //http://localhost:1337/backend/
-
+    // AJAX
     $('#rk_send').on('click', function () {
-        debugger;
         $.ajax({
             type: "POST",
             url: "../../index.php",
-            data: form.save()
+            data: { data: form.save() }
         })
             .done(function (msg) {
                 alert("Data Saved: " + msg);

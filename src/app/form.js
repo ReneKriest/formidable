@@ -25,7 +25,7 @@ rk = window.rk || {};
         // Settings
         $(wrapper).append(this.formElement);
 
-        this.element = $('#' + id);
+        this.$element = $('#' + id);
         this.id = id;
     }
 
@@ -38,7 +38,7 @@ rk = window.rk || {};
                 throw new Error('Wrong Instance');
 
             this.components.push(control);
-            this.element.append(control.getElement());
+            this.$element.append(control.getElement());
         },
         save: function () {
             var jsonNameValue = [];
@@ -53,7 +53,7 @@ rk = window.rk || {};
             return JSON.stringify(jsonNameValue);
         },
         getElement: function () {
-            return this.element;
+            return this.$element;
         }
     };
 

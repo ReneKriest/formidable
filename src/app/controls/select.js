@@ -135,12 +135,12 @@ rk = window.rk || {};
             return $('#' + this.id);
         },
         getValue: function () {
-            return this.element.val();
+            return this.getNode().val();
         },
         save: function () {
             return {
                 'name': this.settings.name,
-                'value': this.getNode().val()       // TODO: Escapen
+                'value': this.getValue()       // TODO: Escapen
             }
         }
     };

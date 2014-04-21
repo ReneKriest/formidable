@@ -33,6 +33,7 @@ rk = window.rk || {};
         this.settings = settings;
         this.id = settings.id;
         // input control = template + default settings
+        // TODO: $elemet = $(template(settings)) ?
         this.element = template(settings);
     }
 
@@ -44,12 +45,13 @@ rk = window.rk || {};
             return $('#' + this.id);
         },
         getValue: function () {
-            return this.element.val();
+            return this.getNode().val();
         },
         save: function () {
+            // return {this.settings.name: this.getValue()}
             return {
                 'name': this.settings.name,
-                'value': this.getNode().val()   // TODO: Escapen
+                'value': this.getValue()   // TODO: Escapen
             }
         }
     };
