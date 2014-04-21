@@ -5,6 +5,7 @@ rk = window.rk || {};
     'use strict';
 
     function FieldSet(wrapper, id) {
+        // if isBirthtday
         this.components = [];
         var templateHtml = $('#template_control_fieldset').html(),
             template = Handlebars.compile(templateHtml);
@@ -36,6 +37,9 @@ rk = window.rk || {};
         },
         getElement: function () {
             return this.$element;
+        },
+        validate: function () {
+            // TODO: if isBirthday
         }
     };
     FieldSet.prototype = Object.create(FieldSetMethods);
