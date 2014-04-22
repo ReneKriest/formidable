@@ -10,8 +10,7 @@ rk = window.rk || {};
     function SelectControl (settings) {
         // Single var pattern:
         var templateHtml,
-            template,
-            templateValues;
+            template;
 
         // Static value/Memoization Pattern
         // Prevents double usage of IDs
@@ -148,12 +147,18 @@ rk = window.rk || {};
                 'value': this.getValue()       // TODO: Escapen
             }
         },
+        showError: function () {
+            this.getElement().addClass(this.CONFIG.ERROR_CLASS);
+        },
+        hideError: function () {
+            this.getElement().removeClass(this.CONFIG.ERROR_CLASS);
+        },
+        isValid: null,
         validate: function () {
             if (!this.settings.validationType)
                 return;
 
             var inputValue = this.getValue(),
-                $element = this.getElement(),
                 methodNamesArray = Object.keys(rk.validation); // TODO: DepInjection --> rk.validation als validation Obj reinreichen, bzw. die Keys selbst als Dict reinreichen
 
             // Check if desired validation method is available and fail miserably in case of false type invocation
@@ -162,9 +167,11 @@ rk = window.rk || {};
 
             // Calling a method dynamically with bracket notation
             if (!(rk.validation[this.settings.validationType](inputValue))) {
-                $element.addClass(this.CONFIG.ERROR_CLASS);
+                this.isValid = false;
+                this.showError();
             } else {
-                $element.removeClass(this.CONFIG.ERROR_CLASS);
+                this.isValid = true;
+                this.hideError();
             }
         }
     };

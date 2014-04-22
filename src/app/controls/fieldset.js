@@ -39,7 +39,6 @@ rk = window.rk || {};
             return this.$element;
         },
         validate: function () {
-            // TODO: if isBirthday
             this.components.forEach(function (component) {
                 component.validate();
             })
