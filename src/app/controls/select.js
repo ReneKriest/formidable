@@ -137,11 +137,8 @@ rk = window.rk || {};
         getElement: function () {
             return this.$element;
         },
-        getNode: function () {
-            return $('#' + this.id);
-        },
         getValue: function () {
-            return this.getNode().val();
+            return this.getElement().val();
         },
         save: function () {
             return {
@@ -167,12 +164,12 @@ rk = window.rk || {};
                 throw new Error (this.CONFIG.EXCEPTIONS.VALIDATION_METHOD_NOT_FOUND);
 
             // Calling a method dynamically with bracket notation
-            if (!(rk.validation[this.settings.validationType](inputValue))) {
-                this.isValid = false;
-                this.showError();
-            } else {
+            if (rk.validation[this.settings.validationType](inputValue)) {
                 this.isValid = true;
                 this.hideError();
+            } else {
+                this.isValid = false;
+                this.showError();
             }
         }
     };

@@ -39,19 +39,21 @@ rk = window.rk || {};
 
         this.settings = settings;
         this.id = settings.id;
+        this.isValid = null;
         // input control = template + default settings as a jQuery object
         this.$element = $(template(settings));
     }
 
     var InputControlMethods = {
+        // label and input
         getElement: function () {
             return this.$element;
         },
-        getNode: function () {
+        getInputNode: function () {
             return $('#' + this.id);
         },
         getValue: function () {
-            return this.getNode().val();
+            return this.getInputNode().val();
         },
         save: function () {
             // return {this.settings.name: this.getValue()}
@@ -60,12 +62,17 @@ rk = window.rk || {};
                 'value': this.getValue()   // TODO: Escapen
             }
         },
+        showError: function () {
+            this.getInputNode().addClass(this.CONFIG.ERROR_CLASS);
+        },
+        hideError: function () {
+            this.getInputNode().removeClass(this.CONFIG.ERROR_CLASS);
+        },
         validate: function () {
             if (!this.settings.validationType)
                 return;
 
             var inputValue = this.getValue(),
-                $element = this.getElement(),
                 methodNamesArray = Object.keys(rk.validation); // TODO: DepInjection --> rk.validation als validation Obj reinreichen, bzw. die Keys selbst als Dict reinreichen
 
             // Check if desired validation method is available and fail miserably in case of false type invocation
@@ -73,10 +80,12 @@ rk = window.rk || {};
                 throw new Error (this.CONFIG.EXCEPTIONS.VALIDATION_METHOD_NOT_FOUND);
 
             // Calling a method dynamically with bracket notation
-            if (!(rk.validation[this.settings.validationType](inputValue))) {
-                $element.addClass(this.CONFIG.ERROR_CLASS);
+            if (rk.validation[this.settings.validationType](inputValue)) {
+                this.isValid = true;
+                this.hideError();
             } else {
-                $element.removeClass(this.CONFIG.ERROR_CLASS);
+                this.isValid = false;
+                this.showError();
             }
         }
     };
