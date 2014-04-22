@@ -8,8 +8,13 @@ rk = window.rk || {};
 ;(function (rk) {
     'use strict';
 
+    // TODO: {id: ..., wrapper: ...}
     function Form(wrapper, id) {
         this.components = [];
+
+        this.CONFIG = {
+            FORM_TEMPLATE: '#template_form'
+        };
 
         var settings = {
             id: id,
@@ -17,15 +22,14 @@ rk = window.rk || {};
             action: '',
             method: ''
         };
-        // Handlebars
-        var templateHtml = $('#template_form').html(),
+        // Handlebar template
+        var templateHtml = $(this.CONFIG.FORM_TEMPLATE).html(),
             template = Handlebars.compile(templateHtml);
 
-        this.formElement = template(settings);
-        // Settings
-        $(wrapper).append(this.formElement);
+        // Convention: $element --> jQuery object
+        this.$element = $(template(settings));
+        $(wrapper).append(this.$element);
 
-        this.$element = $('#' + id);
         this.id = id;
     }
 
