@@ -57,6 +57,8 @@ rk = window.rk || {};
         this.settings = settings;
         this.id = settings.id;
 
+        this.isValid = null;
+
         handlebarHelperRegistration();
 
         // Normal Values
@@ -153,7 +155,6 @@ rk = window.rk || {};
         hideError: function () {
             this.getElement().removeClass(this.CONFIG.ERROR_CLASS);
         },
-        isValid: null,
         validate: function () {
             if (!this.settings.validationType)
                 return;
