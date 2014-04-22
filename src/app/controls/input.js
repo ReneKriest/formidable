@@ -19,7 +19,9 @@ rk = window.rk || {};
             id: 'rk_input',
             name: 'rk_input',
             placeholder: 'Text',
-            label: 'Label für den Text:'
+            label: 'Label für den Text:',
+
+            validationType: 'integer'
         },
             templateHtml = $('#template_control_input').html(),
             template = Handlebars.compile(templateHtml);
@@ -52,6 +54,15 @@ rk = window.rk || {};
             return {
                 'name': this.settings.name,
                 'value': this.getValue()   // TODO: Escapen
+            }
+        },
+        validate: function () {
+            if (!this.settings.validationType)
+                return;
+
+            var value = this.getValue();
+            if (!(rk.validation.integer(value))) {
+                alert('Fehler!');
             }
         }
     };

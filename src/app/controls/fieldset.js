@@ -40,6 +40,9 @@ rk = window.rk || {};
         },
         validate: function () {
             // TODO: if isBirthday
+            this.components.forEach(function (component) {
+                component.validate();
+            })
         }
     };
     FieldSet.prototype = Object.create(FieldSetMethods);

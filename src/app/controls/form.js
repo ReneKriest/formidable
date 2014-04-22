@@ -54,6 +54,11 @@ rk = window.rk || {};
         },
         getElement: function () {
             return this.$element;
+        },
+        validate: function () {
+            this.components.forEach(function (component) {
+                component.validate();
+            })
         }
     };
 

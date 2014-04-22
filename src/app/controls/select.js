@@ -38,7 +38,9 @@ rk = window.rk || {};
 
             birthDay: false,
             birthMonth: false,
-            birthYear: false
+            birthYear: false,
+
+            validationType: null
         };
 
         // Merge the default settings with injected settings
@@ -86,10 +88,9 @@ rk = window.rk || {};
         var handlebarHelper = {
             createDays: function () {
                 var days = [],
-                    day,
-                    k;
-                for (day = 1, k = 0; day <= 31; day++, k++) {
-                    days[k] = day;
+                    day;
+                for (day = 1; day <= 31; day++) {
+                    days.push(day);
                 }
                 var templateHtml = $('#template_control_select_birthday_options').html(),
                     template = Handlebars.compile(templateHtml);
@@ -100,7 +101,7 @@ rk = window.rk || {};
                 var months = [],
                     month;
                 for (month = 1; month <= 12; month++) {
-                    months[month - 1] = month;
+                    months.push(month);
                 }
                 var templateHtml = $('#template_control_select_birthday_options').html(),
                     template = Handlebars.compile(templateHtml);
@@ -109,10 +110,9 @@ rk = window.rk || {};
             },
             createYears: function () {
                 var years = [],
-                    year,
-                    k;
-                for (year = 2013, k = 0; year >= 1950; year--, k++) {
-                    years[k] = year;
+                    year;
+                for (year = 2013; year >= 1950; year--) {
+                    years.push(year);
                 }
                 var templateHtml = $('#template_control_select_birthday_options').html(),
                     template = Handlebars.compile(templateHtml);
@@ -141,6 +141,15 @@ rk = window.rk || {};
             return {
                 'name': this.settings.name,
                 'value': this.getValue()       // TODO: Escapen
+            }
+        },
+        validate: function () {
+            if (!this.settings.validationType)
+                return;
+
+            var value = this.getValue();
+            if (!(rk.validation.integer(value))) {
+                alert('Fehler!');
             }
         }
     };
