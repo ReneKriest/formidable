@@ -175,6 +175,8 @@ rk = window.rk || {};
             }
         }
     };
+
+    // Prototype
     SelectControl.prototype = Object.create(SelectControlMethods);
 
     rk.Controls = rk.Controls || {};
