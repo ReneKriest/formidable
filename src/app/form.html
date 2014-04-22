@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="author" content="Rene Kriest">
     <title>Form</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <nav></nav>
@@ -22,7 +23,7 @@
     <fieldset><legend>{{this.legend}}</legend></fieldset>
 </script>
 <script id="template_control_input" type="text/x-handlebars-template">
-    <label for="{{this.id}}">{{this.label}}</label><input id="{{this.id}}" type="text" placeholder="{{this.placeholder}}" name="">
+    <label for="{{this.id}}">{{this.label}}</label><input id="{{this.id}}" type="text" placeholder="{{this.placeholder}}" autocomplete="off" name="">
 </script>
 
 <!-- Select: standard case -->

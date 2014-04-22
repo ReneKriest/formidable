@@ -1,0 +1,16 @@
+/* Styles */
+
+* {
+/*
+    margin: 0;
+    border: 0;
+    padding: 0;
+    outline: none;
+    text-decoration: none;
+*/
+    box-sizing: border-box;
+}
+
+.rk_error {
+    border-color: #f00;
+}

@@ -21,7 +21,9 @@ $(document).ready(function () {
     var fieldSet = new rk.FieldSet();
 
     var input1 = new rk.Controls.Input();
-    var input2 = new rk.Controls.Input();
+    var input2 = new rk.Controls.Input({
+        validationType: 'email'
+    });
 
     // Spread-Operator bzw. überladen auf Array [input1, input2]
     fieldSet.add(input1);

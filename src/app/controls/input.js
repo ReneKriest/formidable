@@ -60,8 +60,13 @@ rk = window.rk || {};
             if (!this.settings.validationType)
                 return;
 
-            var value = this.getValue();
-            if (!(rk.validation.integer(value))) {
+            var methodNamesArray = Object.keys(rk.validation); // TODO: DepInjection --> rk.validation als validation Obj reinreichen
+            if (methodNamesArray.indexOf(this.settings.validationType) === -1)
+                throw new Error ('Method not found!')   // TODO: String in CONFIG
+
+            var inputValue = this.getValue();
+            // Calling a method dynamically with bracket notation
+            if (!(rk.validation[this.settings.validationType](inputValue))) {
                 alert('Fehler!');
             }
         }
