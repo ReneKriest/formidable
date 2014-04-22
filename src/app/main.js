@@ -31,19 +31,28 @@ $(document).ready(function () {
 
     form.add(fieldSet);
 
-    form.add(new rk.Controls.Select({
+    var bdayFieldset = new rk.FieldSetBirthday();
+
+    bdayFieldset.add(new rk.Controls.Select({
         birthDay: true,
-        values: null
+        values: null,
+
+        validationType: 'integer'
     }));
-    form.add(new rk.Controls.Select({
+    bdayFieldset.add(new rk.Controls.Select({
         birthMonth: true,
-        values: null
+        values: null,
+
+        validationType: 'integer'
     }));
-    form.add(new rk.Controls.Select({
+    bdayFieldset.add(new rk.Controls.Select({
         birthYear: true,
-        values: null
+        values: null,
+
+        validationType: 'integer'
     }));
 
+    form.add(bdayFieldset);
     form.add(new rk.Controls.Select({
         values: [
             {'city_1': 'Frankfurt'},
@@ -52,10 +61,13 @@ $(document).ready(function () {
 
         birthDay: false,
         birthMonth: false,
-        birthYear: false
+        birthYear: false,
+
+        validationType: 'string'
     }));
     rk.check = form;
 
+    return;
     // AJAX
     $('#rk_send').on('click', function () {
         $.ajax({

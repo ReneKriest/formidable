@@ -15,8 +15,8 @@ rk = window.rk || {};
         float: function () {
             return /^\d+$/.test(intString);
         },
-        string: function () {
-            return /^\w+$/.test(intString);
+        string: function (str) {
+            return /^\w+$/.test(str);
         },
         email: function (emailString) {
             return /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/.test(emailString);

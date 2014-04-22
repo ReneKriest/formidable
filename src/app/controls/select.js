@@ -20,14 +20,19 @@ rk = window.rk || {};
 
         // Define constant values:
         // No single var pattern here due to Visual Studio suckage ;)
-        var CONFIG = {
+        this.CONFIG = {
             TEMPLATE: {
                 SELECT: '#template_control_select',
                 BIRTHDAY: '#template_control_select_birthday',
                 BIRTHMONTH: '#template_control_select_birthmonth',
                 BIRTHYEAR: '#template_control_select_birthyear'
+            },
+            ERROR_CLASS: 'rk_error',
+            EXCEPTIONS: {
+                VALIDATION_METHOD_NOT_FOUND: 'Method not found!'
             }
         };
+
         // Define defaults settings:
         var defaultSettings = {
             id: 'rk_select',
@@ -57,20 +62,20 @@ rk = window.rk || {};
 
         // Normal Values
         if (settings.values) {
-            templateHtml = $(CONFIG.TEMPLATE.SELECT).html();
+            templateHtml = $(this.CONFIG.TEMPLATE.SELECT).html();
             template = Handlebars.compile(templateHtml);
         } else {
             // Birthday
             if (settings.birthDay) {
-                templateHtml = $(CONFIG.TEMPLATE.BIRTHDAY).html();
+                templateHtml = $(this.CONFIG.TEMPLATE.BIRTHDAY).html();
                 template = Handlebars.compile(templateHtml);
             }
             if (settings.birthMonth) {
-                templateHtml = $(CONFIG.TEMPLATE.BIRTHMONTH).html();
+                templateHtml = $(this.CONFIG.TEMPLATE.BIRTHMONTH).html();
                 template = Handlebars.compile(templateHtml);
             }
             if (settings.birthYear) {
-                templateHtml = $(CONFIG.TEMPLATE.BIRTHYEAR).html();
+                templateHtml = $(this.CONFIG.TEMPLATE.BIRTHYEAR).html();
                 template = Handlebars.compile(templateHtml);
             }
         }
@@ -144,13 +149,22 @@ rk = window.rk || {};
             }
         },
         validate: function () {
-            // TODO: Bewusste Auswahl, dh das erste Feld ist leer und muss auf Auswahl geprüft werden; andernfalls hätte man ein Default-Select vorgegeben
             if (!this.settings.validationType)
                 return;
 
-            var value = this.getValue();
-            if (!(rk.validation.integer(value))) {
-                alert('Fehler!');
+            var inputValue = this.getValue(),
+                $element = this.getElement(),
+                methodNamesArray = Object.keys(rk.validation); // TODO: DepInjection --> rk.validation als validation Obj reinreichen, bzw. die Keys selbst als Dict reinreichen
+
+            // Check if desired validation method is available and fail miserably in case of false type invocation
+            if (methodNamesArray.indexOf(this.settings.validationType) === -1)
+                throw new Error (this.CONFIG.EXCEPTIONS.VALIDATION_METHOD_NOT_FOUND);
+
+            // Calling a method dynamically with bracket notation
+            if (!(rk.validation[this.settings.validationType](inputValue))) {
+                $element.addClass(this.CONFIG.ERROR_CLASS);
+            } else {
+                $element.removeClass(this.CONFIG.ERROR_CLASS);
             }
         }
     };
