@@ -144,6 +144,7 @@ rk = window.rk || {};
             }
         },
         validate: function () {
+            // TODO: Bewusste Auswahl, dh das erste Feld ist leer und muss auf Auswahl geprüft werden; andernfalls hätte man ein Default-Select vorgegeben
             if (!this.settings.validationType)
                 return;
 

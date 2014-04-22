@@ -6,7 +6,6 @@ rk = window.rk || {};
 ;(function () {
     'use strict';
     // Controls
-
     function InputControl (settings) {
         // Static value/Memoization Pattern
         // Prevents double usage of IDs
@@ -14,6 +13,12 @@ rk = window.rk || {};
         if (!InputControl.id)
             InputControl.id = 0;
 
+        this.CONFIG = {
+            ERROR_CLASS: 'rk_error',
+            EXCEPTIONS: {
+                VALIDATION_METHOD_NOT_FOUND: 'Method not found!'
+            }
+        };
         // Defaults:
         var defaultSettings = {
             id: 'rk_input',
@@ -34,8 +39,7 @@ rk = window.rk || {};
 
         this.settings = settings;
         this.id = settings.id;
-        // input control = template + default settings
-        // TODO: $elemet = $(template(settings)) ?
+        // input control = template + default settings as a jQuery object
         this.$element = $(template(settings));
     }
 
@@ -60,17 +64,24 @@ rk = window.rk || {};
             if (!this.settings.validationType)
                 return;
 
-            var methodNamesArray = Object.keys(rk.validation); // TODO: DepInjection --> rk.validation als validation Obj reinreichen
-            if (methodNamesArray.indexOf(this.settings.validationType) === -1)
-                throw new Error ('Method not found!')   // TODO: String in CONFIG
+            var inputValue = this.getValue(),
+                $element = this.getElement(),
+                methodNamesArray = Object.keys(rk.validation); // TODO: DepInjection --> rk.validation als validation Obj reinreichen, bzw. die Keys selbst als Dict reinreichen
 
-            var inputValue = this.getValue();
+            // Check if desired validation method is available and fail miserably in case of false type invocation
+            if (methodNamesArray.indexOf(this.settings.validationType) === -1)
+                throw new Error (this.CONFIG.EXCEPTIONS.VALIDATION_METHOD_NOT_FOUND);
+
             // Calling a method dynamically with bracket notation
             if (!(rk.validation[this.settings.validationType](inputValue))) {
-                alert('Fehler!');
+                $element.addClass(this.CONFIG.ERROR_CLASS);
+            } else {
+                $element.removeClass(this.CONFIG.ERROR_CLASS);
             }
         }
     };
+
+    // Prototype
     InputControl.prototype = Object.create(InputControlMethods);
 
     rk.Controls = rk.Controls || {};

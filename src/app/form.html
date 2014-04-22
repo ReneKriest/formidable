@@ -29,6 +29,7 @@
 <!-- Select: standard case -->
 <script id="template_control_select" type="text/x-handlebars-template">
     <select size="1" name="{{this.name}}" id="{{this.id}}">
+        <option value="_null"></option>
         {{#each this.values}}
             {{#each this}}
                 <option value="{{@key}}">{{this}}</option>
@@ -41,18 +42,21 @@
 <!-- Select: birthday case -->
 <script id="template_control_select_birthday" type="text/x-handlebars-template">
     <select size="1" name="{{this.name}}" id="{{this.id}}">
+        <option value="_null"></option>
         {{{birthDay}}}
     </select>
 </script>
 
 <script id="template_control_select_birthmonth" type="text/x-handlebars-template">
     <select size="1" name="{{this.name}}" id="{{this.id}}">
+        <option value="_null"></option>
         {{{birthMonth}}}
     </select>
 </script>
 
 <script id="template_control_select_birthyear" type="text/x-handlebars-template">
     <select size="1" name="{{this.name}}" id="{{this.id}}">
+        <option value="_null"></option>
         {{{birthYear}}}
     </select>
 </script>
