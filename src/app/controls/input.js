@@ -1,6 +1,3 @@
-/**
- * Created by Rene on 20.04.2014.
- */
 rk = window.rk || {};
 
 ;(function () {
@@ -59,7 +56,7 @@ rk = window.rk || {};
             // return {this.settings.name: this.getValue()}
             return {
                 'name': this.settings.name,
-                'value': this.getValue()   // TODO: Escapen
+                'value': this.getValue()
             }
         },
         showError: function () {
