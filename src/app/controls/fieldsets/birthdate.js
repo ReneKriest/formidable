@@ -5,24 +5,28 @@ rk = window.rk || {};
     'use strict';
     // Strict mode --> fail earlier
     // Constructor function for the FieldSet Composite
-    function FieldSetBirthday () {
-        var templateHtml = $('#template_control_fieldset').html(),
-            template = Handlebars.compile(templateHtml);
-
-        this.components = [];
-
+    function FieldSetBirthday (settings) {
         this.CONFIG = {
+            FIELDSET_TEMPLATE: '#template_control_fieldset',
             EXCEPTIONS: {
                 WRONG_CONTROL: 'Wrong control!'
             }
         };
         // Settings
-        var settings = {
-            legend: 'Enter birth date'
-        };
+        var defaultSettings = {
+                legend: 'Enter birth date'
+            },
+            templateHtml = $(this.CONFIG.FIELDSET_TEMPLATE).html(),
+            template = Handlebars.compile(templateHtml);
+
+        // Merge the default settings with injected settings
+        settings = $.extend(defaultSettings, settings);
 
         this.$element = $(template(settings));
+        // Container for the composite/leaves
+        this.components = [];
     }
+
     var FieldSetMethods = {
         add: function (control) {
             if (!(control instanceof Object))
@@ -42,8 +46,6 @@ rk = window.rk || {};
             return this.$element;
         },
         validate: function () {
-            // TODO: move to validation module
-
             // Two way check:
             // 1st: is value complete? --> d, m, y
             // 2nd: is dmy a valid date?

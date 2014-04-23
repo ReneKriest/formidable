@@ -5,7 +5,7 @@ rk = window.rk || {};
     'use strict';
     // Strict mode --> fail earlier
     // Constructor function for the FieldSet Composite
-    function FieldSet() {
+    function FieldSet(settings) {
         this.CONFIG = {
             FIELDSET_TEMPLATE: '#template_control_fieldset',
             EXCEPTIONS: {
@@ -14,12 +14,14 @@ rk = window.rk || {};
         };
 
         // Settings
-        var settings = {
-            legend: 'Enter data'
-        };
-
-        var templateHtml = $(this.CONFIG.FIELDSET_TEMPLATE).html(),
+        var defaultSettings = {
+                legend: 'Enter data'
+            },
+            templateHtml = $(this.CONFIG.FIELDSET_TEMPLATE).html(),
             template = Handlebars.compile(templateHtml);
+
+        // Merge the default settings with injected settings
+        settings = $.extend(defaultSettings, settings);
 
         this.$element = $(template(settings));
         // Container for the composite/leaves
