@@ -5,11 +5,8 @@ rk = window.rk || {};
 ;(function (rk) {
     'use strict';
     // Strict mode --> fail earlier
-
     // Constructor function for the Form Composite
     function Form(settings) {
-        this.components = [];
-
         this.CONFIG = {
             FORM_TEMPLATE: '#template_form',
             EXCEPTIONS: {
@@ -18,14 +15,13 @@ rk = window.rk || {};
         };
 
         var defaultSettings = {
-            wrapper: '#rk_form_wrapper',
-            id: 'rk_form',
-            name: 'rk_form_name',
-            action: '#',
-            method: ''
-        };
-        // Handlebar template
-        var templateHtml = $(this.CONFIG.FORM_TEMPLATE).html(),
+                wrapper: '#rk_form_wrapper',
+                id: 'rk_form',
+                name: 'rk_form_name',
+                action: '#',
+                method: ''
+            },
+            templateHtml = $(this.CONFIG.FORM_TEMPLATE).html(),
             template = Handlebars.compile(templateHtml);
 
         // Merge the default settings with injected settings
@@ -34,12 +30,16 @@ rk = window.rk || {};
         // Convention: $element --> jQuery object
         this.$element = $(template(settings));
         $(settings.wrapper).append(this.$element);
-
+        // Container for the composite/leaves
+        this.components = [];
         this.id = settings.id;
     }
 
     // Prototype methods
     var FormMethods = {
+        getElement: function () {
+            return this.$element;
+        },
         add: function (control) {
             if (!(control instanceof Object))
                 throw new Error(this.CONFIG.EXCEPTIONS.WRONG_CONTROL);
@@ -58,9 +58,6 @@ rk = window.rk || {};
                     jsonNameValue.push(values);
             });
             return JSON.stringify(jsonNameValue);
-        },
-        getElement: function () {
-            return this.$element;
         },
         validate: function () {
             this.components.forEach(function (component) {

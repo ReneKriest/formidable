@@ -4,12 +4,8 @@ rk = window.rk || {};
 ;(function (rk) {
     'use strict';
     // Strict mode --> fail earlier
-
     // Constructor function for the FieldSet Composite
-    function FieldSet(wrapper, id) {
-        // Container for the composite/leaves
-        this.components = [];
-
+    function FieldSet() {
         this.CONFIG = {
             FIELDSET_TEMPLATE: '#template_control_fieldset',
             EXCEPTIONS: {
@@ -26,7 +22,8 @@ rk = window.rk || {};
             template = Handlebars.compile(templateHtml);
 
         this.$element = $(template(settings));
-        this.id = id;
+        // Container for the composite/leaves
+        this.components = [];
     }
     var FieldSetMethods = {
         add: function (control) {

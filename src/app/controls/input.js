@@ -19,13 +19,13 @@ rk = window.rk || {};
         };
         // Defaults:
         var defaultSettings = {
-            id: 'rk_input',
-            name: 'rk_input',
-            placeholder: 'Integer',
-            label: 'Label:',
+                id: 'rk_input',
+                name: 'rk_input',
+                placeholder: 'Integer',
+                label: 'Label:',
 
-            validationType: 'integer'
-        },
+                validationType: 'integer'
+            },
             templateHtml = $('#template_control_input').html(),
             template = Handlebars.compile(templateHtml);
 
@@ -39,6 +39,7 @@ rk = window.rk || {};
         this.id = settings.id;
         this.isValid = null;
         // input control = template + default settings as a jQuery object
+        // Convention: $element --> jQuery object
         this.$element = $(template(settings));
     }
 

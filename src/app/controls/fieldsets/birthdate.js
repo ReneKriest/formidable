@@ -3,8 +3,9 @@ rk = window.rk || {};
 
 ;(function (rk) {
     'use strict';
-
-    function FieldSetBirthday (wrapper, id) {
+    // Strict mode --> fail earlier
+    // Constructor function for the FieldSet Composite
+    function FieldSetBirthday () {
         var templateHtml = $('#template_control_fieldset').html(),
             template = Handlebars.compile(templateHtml);
 
@@ -21,7 +22,6 @@ rk = window.rk || {};
         };
 
         this.$element = $(template(settings));
-        this.id = id;
     }
     var FieldSetMethods = {
         add: function (control) {
@@ -85,9 +85,11 @@ rk = window.rk || {};
             // you could fire an event or vice versa if the result was invalid.
             // This way lose coupling could be achieved.
 
+            // TODO: Remove
             // A special present for Daniel Knott ;)
             if (isValidDate && day === 23 && month === 4-1 && year === 1984) {
                 $('#rk_bday_dk').html('<iframe width="560" height="315" src="//www.youtube.com/embed/inS9gAgSENE?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
+                $('#rk_bday_wrapper').show();
             } else {
                 $('#rk_bday_dk').html('');
             }

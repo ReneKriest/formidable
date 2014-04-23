@@ -50,7 +50,11 @@ rk.main = {
             label: 'Select city: ',
             values: [
                 {'Frankfurt': 'Frankfurt'},
-                {'Wiesbaden': 'Wiesbaden'}
+                {'Wiesbaden': 'Wiesbaden'},
+                {'Mainz': 'Mainz'},
+                {'Braunschweig': 'Braunschweig'},
+                {'Nürnberg': 'Nürnberg'},
+                {'Hamburg': 'Hamburg'}
             ],
 
             birthDay: false,
@@ -63,6 +67,7 @@ rk.main = {
 
         rk.formObject = form;
     },
+    // Controlers in the sense of MVC
     formEventHandler: function () {
         // In case of many event handlers/performance considerations: use event delegation
         // However a dispatcher is overkill for only 2 buttons ;)
@@ -79,7 +84,9 @@ rk.main = {
     }
 };
 
+// Document ready
 $(document).ready(function () {
+    $('#rk_bday_wrapper').hide();
     rk.main.formActivation();
     rk.main.formEventHandler();
 });

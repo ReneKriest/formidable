@@ -5,10 +5,6 @@ rk = window.rk || {};
     'use strict';
     // Constructor function for the Select Control (leaf)
     function SelectControl (settings) {
-        // Single var pattern:
-        var templateHtml,
-            template;
-
         // Static value/Memoization Pattern
         // Prevents double usage of IDs
         if (!SelectControl.id)
@@ -29,20 +25,23 @@ rk = window.rk || {};
             }
         };
 
+        // Single var pattern:
         // Define defaults settings:
         var defaultSettings = {
-            id: 'rk_select',
-            placeholder: 'Text',
-            label: 'Label für den Text:',
-            name: 'rk_select',
-            values: null,
+                id: 'rk_select',
+                placeholder: 'Text',
+                label: 'Label für den Text:',
+                name: 'rk_select',
+                values: null,
 
-            birthDay: false,
-            birthMonth: false,
-            birthYear: false,
+                birthDay: false,
+                birthMonth: false,
+                birthYear: false,
 
-            validationType: null
-        };
+                validationType: null
+            },
+            templateHtml,
+            template;
 
         // Merge the default settings with injected settings
         settings = $.extend(defaultSettings, settings);
@@ -53,7 +52,6 @@ rk = window.rk || {};
         // Expose the settings object
         this.settings = settings;
         this.id = settings.id;
-
         this.isValid = null;
 
         handlebarHelperRegistration();
@@ -77,6 +75,7 @@ rk = window.rk || {};
                 template = Handlebars.compile(templateHtml);
             }
         }
+        // Convention: $element --> jQuery object
         this.$element = $(template(settings));
     }
 
