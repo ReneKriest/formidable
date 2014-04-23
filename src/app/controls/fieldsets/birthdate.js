@@ -27,6 +27,7 @@ rk = window.rk || {};
         this.components = [];
     }
 
+    // Prototype methods
     var FieldSetMethods = {
         add: function (control) {
             if (!(control instanceof Object))

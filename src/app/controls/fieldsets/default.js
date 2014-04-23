@@ -27,6 +27,8 @@ rk = window.rk || {};
         // Container for the composite/leaves
         this.components = [];
     }
+
+    // Prototype methods
     var FieldSetMethods = {
         add: function (control) {
             // Factory would lead to better results

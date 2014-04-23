@@ -87,14 +87,26 @@ rk = window.rk || {};
 
         SelectControl.helperRegistered = true;
 
+        var CONFIG = {
+            BIRTHDATE_OPTIONS_TEMPLATE: '#template_control_select_birthday_options',
+
+            MIN_DAY_COUNT: 1,
+            MAX_DAY_COUNT: 31,
+
+            MIN_MONTH_COUNT: 1,
+            MAX_MONTH_COUNT: 12,
+
+            MIN_YEAR_COUNT: 1950,
+            MAX_YEAR_COUNT: 2013
+        };
         var handlebarHelper = {
             createDays: function () {
                 var days = [],
                     day;
-                for (day = 1; day <= 31; day++) {
+                for (day = CONFIG.MIN_DAY_COUNT; day <= CONFIG.MAX_DAY_COUNT; day++) {
                     days.push(day);
                 }
-                var templateHtml = $('#template_control_select_birthday_options').html(),
+                var templateHtml = $(CONFIG.BIRTHDATE_OPTIONS_TEMPLATE).html(),
                     template = Handlebars.compile(templateHtml);
 
                 return template(days);
@@ -102,10 +114,10 @@ rk = window.rk || {};
             createMonths: function () {
                 var months = [],
                     month;
-                for (month = 1; month <= 12; month++) {
+                for (month = CONFIG.MIN_MONTH_COUNT; month <= CONFIG.MAX_MONTH_COUNT; month++) {
                     months.push(month);
                 }
-                var templateHtml = $('#template_control_select_birthday_options').html(),
+                var templateHtml = $(CONFIG.BIRTHDATE_OPTIONS_TEMPLATE).html(),
                     template = Handlebars.compile(templateHtml);
 
                 return template(months);
@@ -113,10 +125,10 @@ rk = window.rk || {};
             createYears: function () {
                 var years = [],
                     year;
-                for (year = 2013; year >= 1950; year--) {
+                for (year = CONFIG.MAX_YEAR_COUNT; year >= CONFIG.MIN_YEAR_COUNT; year--) {
                     years.push(year);
                 }
-                var templateHtml = $('#template_control_select_birthday_options').html(),
+                var templateHtml = $(CONFIG.BIRTHDATE_OPTIONS_TEMPLATE).html(),
                     template = Handlebars.compile(templateHtml);
 
                 return template(years);
@@ -127,6 +139,7 @@ rk = window.rk || {};
         Handlebars.registerHelper('birthMonth', handlebarHelper.createMonths);
         Handlebars.registerHelper('birthYear', handlebarHelper.createYears);
     }
+    // Handlebar Helper registration and configuration END
 
     // Prototype methods
     var SelectControlMethods = {

@@ -43,6 +43,7 @@ rk = window.rk || {};
         this.$element = $(template(settings));
     }
 
+    // Prototype methods
     var InputControlMethods = {
         // label and input
         getElement: function () {
