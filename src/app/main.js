@@ -1,6 +1,3 @@
-/**
- * Created by Rene on 20.04.2014.
- */
 $(document).ready(function () {
     var form = {
         settings: {
@@ -17,8 +14,8 @@ $(document).ready(function () {
             }
         }
     };
-    var form = new rk.Form('#wrapper', 'test');
-    var fieldSet = new rk.FieldSet();
+    var form = new rk.Form('#rk_form_wrapper', 'test');
+    var fieldSet = new rk.FieldSets.Default();
 
     var input1 = new rk.Controls.Input();
     var input2 = new rk.Controls.Input({
@@ -31,21 +28,24 @@ $(document).ready(function () {
 
     form.add(fieldSet);
 
-    var bdayFieldset = new rk.FieldSetBirthday();
+    var bdayFieldset = new rk.FieldSets.FieldSetBirthday();
 
     bdayFieldset.add(new rk.Controls.Select({
+        label: 'Day: ',
         birthDay: true,
         values: null,
 
         validationType: 'integer'
     }));
     bdayFieldset.add(new rk.Controls.Select({
+        label: 'Month: ',
         birthMonth: true,
         values: null,
 
         validationType: 'integer'
     }));
     bdayFieldset.add(new rk.Controls.Select({
+        label: 'Year: ',
         birthYear: true,
         values: null,
 
@@ -54,9 +54,10 @@ $(document).ready(function () {
 
     form.add(bdayFieldset);
     form.add(new rk.Controls.Select({
+        label: 'Select city: ',
         values: [
-            {'city_1': 'Frankfurt'},
-            {'city_2': 'Wiesbaden'}
+            {'Frankfurt': 'Frankfurt'},
+            {'Wiesbaden': 'Wiesbaden'}
         ],
 
         birthDay: false,
@@ -67,19 +68,17 @@ $(document).ready(function () {
     }));
     rk.check = form;
 
-    return;
-    // AJAX
-    $('#rk_send').on('click', function () {
-        $.ajax({
-            type: "POST",
-            url: "../../index.php",
-            data: { data: form.save() }
-        })
-            .done(function (msg) {
-                alert("Data Saved: " + msg);
-            })
-            .fail(function (result) {
-                alert(result);
-            });
-    });
+    formEventHandler();
+
+    function formEventHandler() {
+        // In case of many event handlers/performance considerations: use event delegation
+        // However a dispatcher is overkill for only 2 buttons ;)
+        $('.rk_form_button_validate').on('click', function (e) {
+            rk.check.validate();
+        });
+        $('.rk_form_button_save').on('click', function (e) {
+            var result = rk.check.save();
+            $('#rk_form_result').text(result);
+        });
+    }
 });

@@ -11,6 +11,12 @@
     box-sizing: border-box;
 }
 
-.rk_error {
+form input, form select {
+    -webkit-transition: border-color 5s linear;
+    transition: border-color 0.5s ease;
+}
+
+.rk_control_error {
     border-color: #f00;
 }
+

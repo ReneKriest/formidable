@@ -7,7 +7,9 @@ rk = window.rk || {};
 
 ;(function (rk) {
     'use strict';
+    // Strict mode --> fail earlier
 
+    // Constructor function for the Form Composite
     // TODO: {id: ..., wrapper: ...}
     function Form(wrapper, id) {
         this.components = [];

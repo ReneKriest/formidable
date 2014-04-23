@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html>
-<head lang="de-de">
+<html lang="de-de">
+<head>
     <meta charset="UTF-8">
     <meta name="author" content="Rene Kriest">
     <title>Form</title>
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<nav></nav>
-<h1>Form Fields</h1>
+<h1>Form Example</h1>
+<h2>Forms done via JavaScript</h2>
+<section id="rk_form_wrapper"></section>
+<ul>
+    <li class="rk_form_button_validate">Validate</li>
+    <li class="rk_form_button_save">Save</li>
+</ul>
+<section id="rk_form_result"></section>
 
-<section id="wrapper"></section>
-<section>
-    <div id="rk_send">AJAX</div>
-</section>
-
-<!-- Templates -->
+<!-- Handlebar Templates -->
 <script id="template_form" type="text/x-handlebars-template">
     <form id="{{this.id}}" name="{{this.name}}" action="{{this.action}}" method="{{this.method}}"></form>
 </script>
@@ -28,6 +29,7 @@
 
 <!-- Select: standard case -->
 <script id="template_control_select" type="text/x-handlebars-template">
+    <label for="{{this.id}}">{{this.label}}</label>
     <select size="1" name="{{this.name}}" id="{{this.id}}">
         <option value=""></option>
         {{#each this.values}}
@@ -41,6 +43,7 @@
 
 <!-- Select: birthday case -->
 <script id="template_control_select_birthday" type="text/x-handlebars-template">
+    <label for="{{this.id}}">{{this.label}}</label>
     <select size="1" name="{{this.name}}" id="{{this.id}}">
         <option value=""></option>
         {{{birthDay}}}
@@ -48,6 +51,7 @@
 </script>
 
 <script id="template_control_select_birthmonth" type="text/x-handlebars-template">
+    <label for="{{this.id}}">{{this.label}}</label>
     <select size="1" name="{{this.name}}" id="{{this.id}}">
         <option value=""></option>
         {{{birthMonth}}}
@@ -55,6 +59,7 @@
 </script>
 
 <script id="template_control_select_birthyear" type="text/x-handlebars-template">
+    <label for="{{this.id}}">{{this.label}}</label>
     <select size="1" name="{{this.name}}" id="{{this.id}}">
         <option value=""></option>
         {{{birthYear}}}
@@ -67,11 +72,13 @@
     {{/each}}
 </script>
 <!-- Select: birthday case END -->
+<!-- Handlebar Templates END -->
 
-<!-- Templates END -->
+<!-- JavaScript -->
 <!-- Vendor Libraries -->
 <script src="../../vendor/jquery-2.1.0.js"></script>
 <script src="../../vendor/handlebars-v1.3.0.js"></script>
+<!-- Vendor Libraries -->
 <!-- App -->
 <script src="validation.js"></script>
 <script src="controls/form.js"></script>
@@ -80,5 +87,6 @@
 <script src="controls/input.js"></script>
 <script src="controls/select.js"></script>
 <script src="main.js"></script>
+<!-- App END -->
 </body>
 </html>

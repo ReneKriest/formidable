@@ -3,10 +3,13 @@ rk = window.rk || {};
 
 ;(function (rk) {
     'use strict';
+    // Strict mode --> fail earlier
 
+    // Constructor function for the FieldSet Composite
     function FieldSet(wrapper, id) {
-        // if isBirthtday
+        // Container for the composite/leaves
         this.components = [];
+
         var templateHtml = $('#template_control_fieldset').html(),
             template = Handlebars.compile(templateHtml);
 
@@ -46,7 +49,8 @@ rk = window.rk || {};
     };
     FieldSet.prototype = Object.create(FieldSetMethods);
 
-    rk.FieldSet = FieldSet;
+    rk.FieldSets = rk.FieldSets || {};
+    rk.FieldSets.Default = FieldSet;
 })(rk);
 
 

@@ -1,8 +1,9 @@
 rk = window.rk || {};
 
 ;(function () {
+    // Strict mode --> fail earlier
     'use strict';
-    // Controls
+    // Constructor function for the Input Control (leaf)
     function InputControl (settings) {
         // Static value/Memoization Pattern
         // Prevents double usage of IDs
@@ -11,7 +12,7 @@ rk = window.rk || {};
             InputControl.id = 0;
 
         this.CONFIG = {
-            ERROR_CLASS: 'rk_error',
+            ERROR_CLASS: 'rk_control_error',
             EXCEPTIONS: {
                 VALIDATION_METHOD_NOT_FOUND: 'Method not found!'
             }

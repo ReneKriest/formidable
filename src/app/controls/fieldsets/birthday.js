@@ -44,7 +44,7 @@ rk = window.rk || {};
             this.components.forEach(function (component) {
                 component.validate();
                 isValid = component.isValid;
-                dateValues.push(Number(component.getValue()));
+                dateValues.push(component.getValue());  // Number not String
             })
             // Two way check:
             // 1st: is value complete? --> d, m, y
@@ -56,6 +56,7 @@ rk = window.rk || {};
 
             // TODO: selects auf NameIDs mappen, statt von einer Reihenfolge auszugehen (Convention)
             // TODO: Select --> this.ctrName = birthday --> getChildByName()
+            // TODO: in Validate-Module auslagern
             // 2nd check
             var day = dateValues[0],
                 month = dateValues[1]-1,   // Month --> zero based
@@ -76,14 +77,12 @@ rk = window.rk || {};
                 validDate = false;
                 this.components[2].showError();
             }
-
-            if (validDate)
-                alert('Valid!');
         }
     };
     FieldSetBirthday.prototype = Object.create(FieldSetMethods);
 
-    rk.FieldSetBirthday = FieldSetBirthday;
+    rk.FieldSets = rk.FieldSets || {};
+    rk.FieldSets.FieldSetBirthday = FieldSetBirthday;
 })(rk);
 
 

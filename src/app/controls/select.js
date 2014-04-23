@@ -3,7 +3,7 @@ rk = window.rk || {};
 ;(function () {
     // Strict mode --> fail earlier
     'use strict';
-    // Controls
+    // Constructor function for the Select Control (leaf)
     function SelectControl (settings) {
         // Single var pattern:
         var templateHtml,
@@ -23,7 +23,7 @@ rk = window.rk || {};
                 BIRTHMONTH: '#template_control_select_birthmonth',
                 BIRTHYEAR: '#template_control_select_birthyear'
             },
-            ERROR_CLASS: 'rk_error',
+            ERROR_CLASS: 'rk_control_error',
             EXCEPTIONS: {
                 VALIDATION_METHOD_NOT_FOUND: 'Method not found!'
             }
@@ -134,20 +134,24 @@ rk = window.rk || {};
         getElement: function () {
             return this.$element;
         },
+        getSelectNode: function () {
+            // TODO: Performance: caching
+            return $('#' + this.id);
+        },
         getValue: function () {
-            return this.getElement().val();
+            return Number(this.getSelectNode().val());
         },
         save: function () {
             return {
                 'name': this.settings.name,
-                'value': this.getValue()       // TODO: Escapen
+                'value': this.getValue()
             }
         },
         showError: function () {
-            this.getElement().addClass(this.CONFIG.ERROR_CLASS);
+            this.getSelectNode().addClass(this.CONFIG.ERROR_CLASS);
         },
         hideError: function () {
-            this.getElement().removeClass(this.CONFIG.ERROR_CLASS);
+            this.getSelectNode().removeClass(this.CONFIG.ERROR_CLASS);
         },
         validate: function () {
             if (!this.settings.validationType)

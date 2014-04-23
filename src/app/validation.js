@@ -5,14 +5,12 @@
 rk = window.rk || {};
 
 (function (rk) {
+    'use strict';
+    // Strict mode --> fail earlier
+
+    // Module pattern
     rk.validation = {
-        number: function () {
-            //
-        },
         integer: function (intString) {
-            return /^\d+$/.test(intString);
-        },
-        float: function () {
             return /^\d+$/.test(intString);
         },
         string: function (str) {
