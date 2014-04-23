@@ -4,7 +4,7 @@ rk = window.rk || {};
     // Strict mode --> fail earlier
     'use strict';
     // Constructor function for the Select Control (leaf)
-    function SelectControl (settings) {
+    function SelectControl (settings, enumObjectBirthdate) {
         // Static value/Memoization Pattern
         // Prevents double usage of IDs
         if (!SelectControl.id)
@@ -53,6 +53,7 @@ rk = window.rk || {};
         this.settings = settings;
         this.id = settings.id;
         this.isValid = null;
+        this.controlName = '';
 
         handlebarHelperRegistration();
 
@@ -63,14 +64,17 @@ rk = window.rk || {};
         } else {
             // Birthday
             if (settings.birthDay) {
+                this.controlName = enumObjectBirthdate.DAY;
                 templateHtml = $(this.CONFIG.TEMPLATE.BIRTHDAY).html();
                 template = Handlebars.compile(templateHtml);
             }
             if (settings.birthMonth) {
+                this.controlName = enumObjectBirthdate.MONTH;
                 templateHtml = $(this.CONFIG.TEMPLATE.BIRTHMONTH).html();
                 template = Handlebars.compile(templateHtml);
             }
             if (settings.birthYear) {
+                this.controlName = enumObjectBirthdate.YEAR;
                 templateHtml = $(this.CONFIG.TEMPLATE.BIRTHYEAR).html();
                 template = Handlebars.compile(templateHtml);
             }
@@ -171,7 +175,7 @@ rk = window.rk || {};
                 return;
 
             var inputValue = this.getValue(),
-                methodNamesArray = Object.keys(rk.validation); // TODO: DepInjection --> rk.validation als validation Obj reinreichen, bzw. die Keys selbst als Dict reinreichen
+                methodNamesArray = Object.keys(rk.validation);
 
             // Check if desired validation method is available and fail miserably in case of false type invocation
             if (methodNamesArray.indexOf(this.settings.validationType) === -1)

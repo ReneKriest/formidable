@@ -5,7 +5,7 @@ rk = window.rk || {};
     'use strict';
     // Strict mode --> fail earlier
     // Constructor function for the FieldSet Composite
-    function FieldSetBirthday (settings) {
+    function FieldSetBirthday (settings, enumObjectBirthdate) {
         this.CONFIG = {
             FIELDSET_TEMPLATE: '#template_control_fieldset',
             EXCEPTIONS: {
@@ -25,6 +25,7 @@ rk = window.rk || {};
         this.$element = $(template(settings));
         // Container for the composite/leaves
         this.components = [];
+        this.enumObjectBirthdate = enumObjectBirthdate;
     }
 
     // Prototype methods
@@ -35,6 +36,8 @@ rk = window.rk || {};
 
             this.components.push(control);
             this.$element.append(control.getElement());
+
+            return this;
         },
         save: function () {
             var jsonNameValue = [];
@@ -45,6 +48,14 @@ rk = window.rk || {};
         },
         getElement: function () {
             return this.$element;
+        },
+        getChild: function (controlName) {
+            var control;
+            this.components.forEach(function (component) {
+                if (component.controlName === controlName)
+                    control = component;
+            });
+            return control;
         },
         validate: function () {
             // Two way check:
@@ -70,21 +81,20 @@ rk = window.rk || {};
                 year = dateValues[2],
                 dateToCheck = new Date(year, month, day);
 
-            // TODO: Needs to be mapped to NameIDs instead of control order
             if (dateToCheck.getDate() !== day) {
                 isValidDate = false;
-                this.components[0].showError();
+                this.getChild(this.enumObjectBirthdate.DAY).showError();
             }
             if (dateToCheck.getMonth() !== month) {
                 isValidDate = false;
-                this.components[1].showError();
+                this.getChild(this.enumObjectBirthdate.MONTH).showError();
             }
             if (dateToCheck.getFullYear() !== year) {
                 isValidDate = false;
-                this.components[2].showError();
+                this.getChild(this.enumObjectBirthdate.YEAR).showError();
             }
 
-            // TODO: Discussion: At this point a observer pattern would make sense. In case of a valid date
+            // Discussion: At this point a observer pattern would make sense. In case of a valid date
             // you could fire an event or vice versa if the result was invalid.
             // This way lose coupling could be achieved.
 
@@ -96,6 +106,7 @@ rk = window.rk || {};
             } else {
                 $('#rk_bday_dk').html('');
             }
+            // TODO: Remove
         }
     };
     FieldSetBirthday.prototype = Object.create(FieldSetMethods);

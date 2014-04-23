@@ -74,7 +74,7 @@ rk = window.rk || {};
                 return;
 
             var inputValue = this.getValue(),
-                methodNamesArray = Object.keys(rk.validation); // TODO: DepInjection --> rk.validation als validation Obj reinreichen, bzw. die Keys selbst als Dict reinreichen
+                methodNamesArray = Object.keys(rk.validation);
 
             // Check if desired validation method is available and fail miserably in case of false type invocation
             if (methodNamesArray.indexOf(this.settings.validationType) === -1)

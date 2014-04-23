@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="Rene Kriest">
-    <title>Form</title>
+    <title>Form Example</title>
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div id="rk_wrapper"><!-- Page Wrapper -->
 <h1>Form Example</h1>
-<h2>Forms done via JavaScript</h2>
+<h2>Forms and validation done via JavaScript</h2>
 <section id="rk_form_wrapper"></section>
 <!-- No <button>s due to IE visual errors -->
 <div class="clearfix rk_buttons_wrapper">
     <ul class="rk_ul">
-        <li class="rk_form_button rk_form_button_validate box-shadow">Validate</li>
-        <li class="rk_form_button rk_form_button_save box-shadow">Save</li>
-        <li class="rk_form_button rk_form_button_clear box-shadow">Clear Result</li>
+        <li class="rk_form_button rk_form_button_validate box-shadow" title="Validate the form and highlight erros">Validate Data</li>
+        <li class="rk_form_button rk_form_button_save box-shadow" title="Show JSON string">Show Data</li>
+        <li class="rk_form_button rk_form_button_clear box-shadow" title="Clear the results box">Clear Result</li>
     </ul>
 </div>
 <section >
@@ -94,7 +94,8 @@
 <script src="../../vendor/handlebars-v1.3.0.js"></script>
 <!-- Vendor Libraries -->
 <!-- App -->
-<script src="validation.js"></script>
+<script src="controls/validation.js"></script>
+<script src="controls/birthdateEnum.js"></script>
 <script src="controls/form.js"></script>
 <script src="controls/fieldsets/default.js"></script>
 <script src="controls/fieldsets/birthdate.js"></script>

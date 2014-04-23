@@ -38,6 +38,8 @@ rk = window.rk || {};
 
             this.components.push(control);
             this.$element.append(control.getElement());
+
+            return this;
         },
         save: function () {
             var jsonNameValue = [];

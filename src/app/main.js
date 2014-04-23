@@ -25,28 +25,28 @@ rk.main = {
         // Birthday FieldSet
         var birthdayFieldSet = new rk.FieldSets.FieldSetBirthday({
             legend: 'Enter birth date'
-        });
+        }, rk.enums.birthdate);
         birthdayFieldSet.add(new rk.Controls.Select({
             label: 'Day: ',
             birthDay: true,
             values: null,
 
             validationType: 'integer'
-        }));
-        birthdayFieldSet.add(new rk.Controls.Select({
+        }, rk.enums.birthdate))
+            .add(new rk.Controls.Select({
             label: 'Month: ',
             birthMonth: true,
             values: null,
 
             validationType: 'integer'
-        }));
-        birthdayFieldSet.add(new rk.Controls.Select({
+        }, rk.enums.birthdate))
+            .add(new rk.Controls.Select({
             label: 'Year: ',
             birthYear: true,
             values: null,
 
             validationType: 'integer'
-        }));
+        }, rk.enums.birthdate));
         form.add(birthdayFieldSet);
 
         var fieldSetBottom = new rk.FieldSets.Default();
