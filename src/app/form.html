@@ -7,21 +7,25 @@
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div id="rk_wrapper">
+<div id="rk_wrapper"><!-- Page Wrapper -->
 <h1>Form Example</h1>
 <h2>Forms done via JavaScript</h2>
 <section id="rk_form_wrapper"></section>
-    <!-- No buttons due to IE visual erros -->
-<div class="clearfix">
-<ul class="rk_ul">
-    <li class="rk_form_button rk_form_button_validate">Validate</li>
-    <li class="rk_form_button rk_form_button_save">Save</li>
-    <li class="rk_form_button rk_form_button_clear">Clear Result</li>
-</ul>
+<!-- No <button>s due to IE visual errors -->
+<div class="clearfix rk_buttons_wrapper">
+    <ul class="rk_ul">
+        <li class="rk_form_button rk_form_button_validate box-shadow">Validate</li>
+        <li class="rk_form_button rk_form_button_save box-shadow">Save</li>
+        <li class="rk_form_button rk_form_button_clear box-shadow">Clear Result</li>
+    </ul>
 </div>
-<section id="rk_form_result"></section>
+<section >
+    <h3>JSON-String:</h3>
+    <div id="rk_form_result" class="box-shadow"></div>
+</section>
 <section id="rk_bday_dk"></section>
-</div>
+</div><!-- Page Wrapper END -->
+
 <!-- Handlebar Templates -->
 <script id="template_form" type="text/x-handlebars-template">
     <form id="{{this.id}}" name="{{this.name}}" action="{{this.action}}" method="{{this.method}}"></form>

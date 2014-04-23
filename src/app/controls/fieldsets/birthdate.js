@@ -5,11 +5,16 @@ rk = window.rk || {};
     'use strict';
 
     function FieldSetBirthday (wrapper, id) {
-        // if isBirthtday
-        this.components = [];
         var templateHtml = $('#template_control_fieldset').html(),
             template = Handlebars.compile(templateHtml);
 
+        this.components = [];
+
+        this.CONFIG = {
+            EXCEPTIONS: {
+                WRONG_CONTROL: 'Wrong control!'
+            }
+        };
         // Settings
         var settings = {
             legend: 'Enter birth date'
@@ -20,10 +25,8 @@ rk = window.rk || {};
     }
     var FieldSetMethods = {
         add: function (control) {
-            // Factory would lead to better results
-            // control instanceof rk.Controls.Input
             if (!(control instanceof Object))
-                throw new Error('Wrong Instance');
+                throw new Error(this.CONFIG.EXCEPTIONS.WRONG_CONTROL);
 
             this.components.push(control);
             this.$element.append(control.getElement());
@@ -77,6 +80,10 @@ rk = window.rk || {};
                 isValidDate = false;
                 this.components[2].showError();
             }
+
+            // TODO: Discussion: At this point a observer pattern would make sense. In case of a valid date
+            // you could fire an event or vice versa if the result was invalid.
+            // This way lose coupling could be achieved.
 
             // A special present for Daniel Knott ;)
             if (isValidDate && day === 23 && month === 4-1 && year === 1984) {

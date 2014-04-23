@@ -1,91 +1,85 @@
-$(document).ready(function () {
-    var form = {
-        settings: {
-            wrapper: 'example'
-        },
-        form: {
-            fieldset: {
-                input: {
-                    //
-                },
-                select: {
-                    //
-                }
-            }
-        }
-    };
-    var form = new rk.Form('#rk_form_wrapper', 'test');
-    var fieldSet = new rk.FieldSets.Default();
+rk = window.rk || {};
 
-    var input1 = new rk.Controls.Input({
-        label: 'Enter an integer: '
-    });
-    var input2 = new rk.Controls.Input({
-        label: 'Enter an email address: ',
-        placeholder: 'Email',
-        validationType: 'email'
-    });
+rk.main = {
+    formActivation: function () {
+        // Instance of Form
+        var form = new rk.Form({
+            wrapper: '#rk_form_wrapper',
+            id: 'rk_form_element'
+        });
 
-    // Spread-Operator bzw. überladen auf Array [input1, input2]
-    fieldSet.add(input1);
-    fieldSet.add(input2);
+        // Default FieldSet
+        var fieldSetTop = new rk.FieldSets.Default();
+        fieldSetTop.add(new rk.Controls.Input({
+            label: 'Enter an integer: '
+        }));
+        fieldSetTop.add(new rk.Controls.Input({
+            label: 'Enter an email address: ',
+            placeholder: 'Email',
+            validationType: 'email'
+        }));
+        form.add(fieldSetTop);
 
-    form.add(fieldSet);
+        // Birthday FieldSet
+        var birthdayFieldSet = new rk.FieldSets.FieldSetBirthday();
+        birthdayFieldSet.add(new rk.Controls.Select({
+            label: 'Day: ',
+            birthDay: true,
+            values: null,
 
-    var bdayFieldset = new rk.FieldSets.FieldSetBirthday();
+            validationType: 'integer'
+        }));
+        birthdayFieldSet.add(new rk.Controls.Select({
+            label: 'Month: ',
+            birthMonth: true,
+            values: null,
 
-    bdayFieldset.add(new rk.Controls.Select({
-        label: 'Day: ',
-        birthDay: true,
-        values: null,
+            validationType: 'integer'
+        }));
+        birthdayFieldSet.add(new rk.Controls.Select({
+            label: 'Year: ',
+            birthYear: true,
+            values: null,
 
-        validationType: 'integer'
-    }));
-    bdayFieldset.add(new rk.Controls.Select({
-        label: 'Month: ',
-        birthMonth: true,
-        values: null,
+            validationType: 'integer'
+        }));
+        form.add(birthdayFieldSet);
 
-        validationType: 'integer'
-    }));
-    bdayFieldset.add(new rk.Controls.Select({
-        label: 'Year: ',
-        birthYear: true,
-        values: null,
+        var fieldSetBottom = new rk.FieldSets.Default();
+        fieldSetBottom.add(new rk.Controls.Select({
+            label: 'Select city: ',
+            values: [
+                {'Frankfurt': 'Frankfurt'},
+                {'Wiesbaden': 'Wiesbaden'}
+            ],
 
-        validationType: 'integer'
-    }));
+            birthDay: false,
+            birthMonth: false,
+            birthYear: false,
 
-    form.add(bdayFieldset);
-    form.add(new rk.Controls.Select({
-        label: 'Select city: ',
-        values: [
-            {'Frankfurt': 'Frankfurt'},
-            {'Wiesbaden': 'Wiesbaden'}
-        ],
+            validationType: 'string'
+        }));
+        form.add(fieldSetBottom);
 
-        birthDay: false,
-        birthMonth: false,
-        birthYear: false,
-
-        validationType: 'string'
-    }));
-    rk.check = form;
-
-    formEventHandler();
-
-    function formEventHandler() {
+        rk.formObject = form;
+    },
+    formEventHandler: function () {
         // In case of many event handlers/performance considerations: use event delegation
         // However a dispatcher is overkill for only 2 buttons ;)
         $('.rk_form_button_validate').on('click', function (e) {
-            rk.check.validate();
+            rk.formObject.validate();
         });
         $('.rk_form_button_save').on('click', function (e) {
-            var result = rk.check.save();
+            var result = rk.formObject.save();
             $('#rk_form_result').text(result);
         });
         $('.rk_form_button_clear').on('click', function (e) {
             $('#rk_form_result').text('');
         });
     }
+};
+
+$(document).ready(function () {
+    rk.main.formActivation();
+    rk.main.formEventHandler();
 });

@@ -2,46 +2,47 @@
 
 rk = window.rk || {};
 
-// method
-// action
-
 ;(function (rk) {
     'use strict';
     // Strict mode --> fail earlier
 
     // Constructor function for the Form Composite
-    // TODO: {id: ..., wrapper: ...}
-    function Form(wrapper, id) {
+    function Form(settings) {
         this.components = [];
 
         this.CONFIG = {
-            FORM_TEMPLATE: '#template_form'
+            FORM_TEMPLATE: '#template_form',
+            EXCEPTIONS: {
+                WRONG_CONTROL: 'Wrong control!'
+            }
         };
 
-        var settings = {
-            id: id,
-            name: 'test',
-            action: '',
+        var defaultSettings = {
+            wrapper: '#rk_form_wrapper',
+            id: 'rk_form',
+            name: 'rk_form_name',
+            action: '#',
             method: ''
         };
         // Handlebar template
         var templateHtml = $(this.CONFIG.FORM_TEMPLATE).html(),
             template = Handlebars.compile(templateHtml);
 
+        // Merge the default settings with injected settings
+        settings = $.extend(defaultSettings, settings);
+
         // Convention: $element --> jQuery object
         this.$element = $(template(settings));
-        $(wrapper).append(this.$element);
+        $(settings.wrapper).append(this.$element);
 
-        this.id = id;
+        this.id = settings.id;
     }
 
     // Prototype methods
     var FormMethods = {
         add: function (control) {
-            // Factory would lead to better results
-            // control instanceof rk.Controls.Input
             if (!(control instanceof Object))
-                throw new Error('Wrong Instance');
+                throw new Error(this.CONFIG.EXCEPTIONS.WRONG_CONTROL);
 
             this.components.push(control);
             this.$element.append(control.getElement());

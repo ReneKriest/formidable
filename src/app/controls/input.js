@@ -67,6 +67,7 @@ rk = window.rk || {};
             this.getInputNode().removeClass(this.CONFIG.ERROR_CLASS);
         },
         validate: function () {
+            // Early return in case of no validation
             if (!this.settings.validationType)
                 return;
 

@@ -10,13 +10,20 @@ rk = window.rk || {};
         // Container for the composite/leaves
         this.components = [];
 
-        var templateHtml = $('#template_control_fieldset').html(),
-            template = Handlebars.compile(templateHtml);
+        this.CONFIG = {
+            FIELDSET_TEMPLATE: '#template_control_fieldset',
+            EXCEPTIONS: {
+                WRONG_CONTROL: 'Wrong control!'
+            }
+        };
 
         // Settings
         var settings = {
             legend: 'Enter data'
         };
+
+        var templateHtml = $(this.CONFIG.FIELDSET_TEMPLATE).html(),
+            template = Handlebars.compile(templateHtml);
 
         this.$element = $(template(settings));
         this.id = id;
@@ -26,7 +33,7 @@ rk = window.rk || {};
             // Factory would lead to better results
             // control instanceof rk.Controls.Input
             if (!(control instanceof Object))
-                throw new Error('Wrong Instance');
+                throw new Error(this.CONFIG.EXCEPTIONS.WRONG_CONTROL);
 
             this.components.push(control);
             this.$element.append(control.getElement());
