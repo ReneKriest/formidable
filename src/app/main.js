@@ -9,7 +9,9 @@ rk.main = {
         });
 
         // Default FieldSet
-        var fieldSetTop = new rk.FieldSets.Default();
+        var fieldSetTop = new rk.FieldSets.Default({
+            legend: 'Enter data'
+        });
         fieldSetTop.add(new rk.Controls.Input({
             label: 'Enter an integer: '
         }));
@@ -21,7 +23,9 @@ rk.main = {
         form.add(fieldSetTop);
 
         // Birthday FieldSet
-        var birthdayFieldSet = new rk.FieldSets.FieldSetBirthday();
+        var birthdayFieldSet = new rk.FieldSets.FieldSetBirthday({
+            legend: 'Enter birth date'
+        });
         birthdayFieldSet.add(new rk.Controls.Select({
             label: 'Day: ',
             birthDay: true,
