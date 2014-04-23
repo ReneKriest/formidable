@@ -17,8 +17,12 @@ $(document).ready(function () {
     var form = new rk.Form('#rk_form_wrapper', 'test');
     var fieldSet = new rk.FieldSets.Default();
 
-    var input1 = new rk.Controls.Input();
+    var input1 = new rk.Controls.Input({
+        label: 'Enter an integer: '
+    });
     var input2 = new rk.Controls.Input({
+        label: 'Enter an email address: ',
+        placeholder: 'Email',
         validationType: 'email'
     });
 
@@ -79,6 +83,9 @@ $(document).ready(function () {
         $('.rk_form_button_save').on('click', function (e) {
             var result = rk.check.save();
             $('#rk_form_result').text(result);
+        });
+        $('.rk_form_button_clear').on('click', function (e) {
+            $('#rk_form_result').text('');
         });
     }
 });

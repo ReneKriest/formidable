@@ -15,7 +15,7 @@ rk = window.rk || {};
 
         // Settings
         var settings = {
-            legend: 'Feldsetzung'
+            legend: 'Enter data'
         };
 
         this.$element = $(template(settings));

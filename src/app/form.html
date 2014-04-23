@@ -7,15 +7,21 @@
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<div id="rk_wrapper">
 <h1>Form Example</h1>
 <h2>Forms done via JavaScript</h2>
 <section id="rk_form_wrapper"></section>
-<ul>
-    <li class="rk_form_button_validate">Validate</li>
-    <li class="rk_form_button_save">Save</li>
+    <!-- No buttons due to IE visual erros -->
+<div class="clearfix">
+<ul class="rk_ul">
+    <li class="rk_form_button rk_form_button_validate">Validate</li>
+    <li class="rk_form_button rk_form_button_save">Save</li>
+    <li class="rk_form_button rk_form_button_clear">Clear Result</li>
 </ul>
+</div>
 <section id="rk_form_result"></section>
-
+<section id="rk_bday_dk"></section>
+</div>
 <!-- Handlebar Templates -->
 <script id="template_form" type="text/x-handlebars-template">
     <form id="{{this.id}}" name="{{this.name}}" action="{{this.action}}" method="{{this.method}}"></form>
@@ -83,7 +89,7 @@
 <script src="validation.js"></script>
 <script src="controls/form.js"></script>
 <script src="controls/fieldsets/default.js"></script>
-<script src="controls/fieldsets/birthday.js"></script>
+<script src="controls/fieldsets/birthdate.js"></script>
 <script src="controls/input.js"></script>
 <script src="controls/select.js"></script>
 <script src="main.js"></script>

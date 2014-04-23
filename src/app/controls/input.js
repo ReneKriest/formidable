@@ -21,8 +21,8 @@ rk = window.rk || {};
         var defaultSettings = {
             id: 'rk_input',
             name: 'rk_input',
-            placeholder: 'Text',
-            label: 'Label für den Text:',
+            placeholder: 'Integer',
+            label: 'Label:',
 
             validationType: 'integer'
         },

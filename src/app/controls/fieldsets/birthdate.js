@@ -12,7 +12,7 @@ rk = window.rk || {};
 
         // Settings
         var settings = {
-            legend: 'Feldsetzung'
+            legend: 'Enter birth date'
         };
 
         this.$element = $(template(settings));
@@ -39,43 +39,50 @@ rk = window.rk || {};
             return this.$element;
         },
         validate: function () {
-            var isValid = false,
-                dateValues = [];
-            this.components.forEach(function (component) {
-                component.validate();
-                isValid = component.isValid;
-                dateValues.push(component.getValue());  // Number not String
-            })
+            // TODO: move to validation module
+
             // Two way check:
             // 1st: is value complete? --> d, m, y
             // 2nd: is dmy a valid date?
 
             // 1st check
-            if (!isValid)
+            var isValidDate = true,
+                dateValues = [];
+            this.components.forEach(function (component) {
+                component.validate();
+                if (!component.isValid)
+                    isValidDate = false;
+                dateValues.push(Number(component.getValue()));  // Number not String
+            });
+            // Early return
+            if (!isValidDate)
                 return;
 
-            // TODO: selects auf NameIDs mappen, statt von einer Reihenfolge auszugehen (Convention)
-            // TODO: Select --> this.ctrName = birthday --> getChildByName()
-            // TODO: in Validate-Module auslagern
             // 2nd check
             var day = dateValues[0],
                 month = dateValues[1]-1,   // Month --> zero based
-                year = dateValues[2];
+                year = dateValues[2],
+                dateToCheck = new Date(year, month, day);
 
-            var dateToCheck = new Date(year, month, day),
-                validDate = true;
-
+            // TODO: Needs to be mapped to NameIDs instead of control order
             if (dateToCheck.getDate() !== day) {
-                validDate = false;
+                isValidDate = false;
                 this.components[0].showError();
             }
             if (dateToCheck.getMonth() !== month) {
-                validDate = false;
+                isValidDate = false;
                 this.components[1].showError();
             }
             if (dateToCheck.getFullYear() !== year) {
-                validDate = false;
+                isValidDate = false;
                 this.components[2].showError();
+            }
+
+            // A special present for Daniel Knott ;)
+            if (isValidDate && day === 23 && month === 4-1 && year === 1984) {
+                $('#rk_bday_dk').html('<iframe width="560" height="315" src="//www.youtube.com/embed/inS9gAgSENE?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
+            } else {
+                $('#rk_bday_dk').html('');
             }
         }
     };

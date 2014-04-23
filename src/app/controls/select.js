@@ -139,7 +139,7 @@ rk = window.rk || {};
             return $('#' + this.id);
         },
         getValue: function () {
-            return Number(this.getSelectNode().val());
+            return this.getSelectNode().val();
         },
         save: function () {
             return {
